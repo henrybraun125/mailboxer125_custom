@@ -48,6 +48,12 @@ class Mailboxer::Conversation < ActiveRecord::Base
     receipts_for(participant).mark_as_flag
   end
 
+  #Mark the conversation as unflag for one of the participants
+  def mark_as_unflag(participant)
+    return unless participant
+    receipts_for(participant).mark_as_unflag
+  end
+
   #Mark the conversation as unread for one of the participants
   def mark_as_unread(participant)
     return unless participant
@@ -140,6 +146,12 @@ class Mailboxer::Conversation < ActiveRecord::Base
   def is_trashed?(participant)
     return false unless participant
     receipts_for(participant).trash.count != 0
+  end
+
+  #Returns true if the participant has at least one flagged message of the conversation
+  def is_flagged?(participant)
+    return false unless participant
+    receipts_for(participant).is_flag.count != 0
   end
 
   #Returns true if the participant has deleted the conversation

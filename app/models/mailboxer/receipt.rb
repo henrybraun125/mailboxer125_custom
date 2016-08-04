@@ -44,6 +44,11 @@ class Mailboxer::Receipt < ActiveRecord::Base
       update_receipts({:is_flag => true}, options)
     end
 
+    #Marks all the receipts from the relation as flag
+    def mark_as_unflag(options={})
+      update_receipts({:is_flag => false}, options)
+    end
+
     #Marks all the receipts from the relation as unread
     def mark_as_unread(options={})
       update_receipts({:is_read => false}, options)
@@ -107,6 +112,10 @@ class Mailboxer::Receipt < ActiveRecord::Base
 
   def mark_as_flag
     update_attributes(:is_flag => true)
+  end
+
+  def mark_as_unflag
+    update_attributes(:is_flag => false)
   end
 
   #Marks the receipt as unread
